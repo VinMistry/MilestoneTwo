@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'com.moneysupermarket.milestonetwo'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    mockitoVersion = '2.22.0'
+    jUnitVersion = '5.3.1'
+}
+dependencies {
+    compile "org.projectlombok:lombok:1.18.0"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.9.6'
+    testCompile("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
+    testCompile("org.mockito:mockito-core:${mockitoVersion}")
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.1.0'
+    )
+    testRuntimeOnly(
+            'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    )
+}

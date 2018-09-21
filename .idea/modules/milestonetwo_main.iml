@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="milestonetwo:main" external.linked.project.path="$MODULE_DIR$/../../MongoDB" external.root.project.path="$MODULE_DIR$/../../MongoDB" external.system.id="GRADLE" external.system.module.group="com.moneysupermarket.milestonetwo" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/../../MongoDB/out/production/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../MongoDB/src/main">
+      <sourceFolder url="file://$MODULE_DIR$/../../MongoDB/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../MongoDB/src/main/resources" type="java-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.18.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.6" level="project" />
+  </component>
+</module>
