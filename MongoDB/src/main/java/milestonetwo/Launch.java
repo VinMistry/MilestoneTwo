@@ -79,19 +79,22 @@ public class Launch {
     return settings;
   }
 
+  public static String getCsvFilePath() {
+    return FilePath.getInputFilePath("mock_data", "csv");
+  }
 
   public static void main(final String[] args) {
 //    final JsonFileOutput jsonFileOutput = new JsonFileOutput(new FilePath(), new ObjectMapper());
     final ClassValidator classValidator = new ClassValidator();
     final CsvFileInput csvFileInput = new CsvFileInput(new ArrayList<CustomerProfile>(), new CsvMapper(), classValidator);
-//    jsonFileOutput.arrayListToFiles(csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")));
-
+//    jsonFileOutput.arrayListToFiles(csvFileInput.jsonStringToObject(FilePath.getInputFilePath("mock_data", "csv")));
+    csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")).forEach(object -> System.out.println(object));
     final MongoDBCon mongoDBCon = new MongoDBCon(getRegistrySettings(), "customers");
     //mongoDBCon.filterRead("car.make", "BMW");
     //mongoDBCon.read("people", 0);
     //mongoDBCon.printResults();
-    // mongoDBCon.insertArrayOfData(csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")), "people");
-    mongoDBCon.filterRead("people", "address.postcode", "SK11", 0);
+    // mongoDBCon.insertArrayOfData(csvFileInput.jsonStringToObject(FilePath.getInputFilePath("mock_data", "csv")), "people");
+    //mongoDBCon.filterRead("people", "address.postcode", "SK11", 0);
     //mongoDBCon.setMongoCollection("people");
     // mongoDBCon.storeAddressesSeparate(mongoDBCon.getMongoCollection());
   }

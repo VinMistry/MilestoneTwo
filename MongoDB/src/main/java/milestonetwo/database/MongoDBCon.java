@@ -26,12 +26,19 @@ public class MongoDBCon implements DBCon {
   private MongoClient mongoClient;
   private MongoDatabase database;
   private MongoCollection<Document> mongoCollection;
+  private MongoCollection<Object> mongoObjectCollection;
   private FindIterable results;
 
   final Block<Document> printBlock = new Block<Document>() {
     @Override
     public void apply(final Document document) {
       System.out.println(document.toJson());
+    }
+  };
+
+  final Block<Document> returnBlock = new Block<Document>() {
+    @Override
+    public void apply(final Document document) {
     }
   };
 
@@ -60,6 +67,14 @@ public class MongoDBCon implements DBCon {
 
   public void setMongoCollection(final String collectionName) {
     this.mongoCollection = getDatabase().getCollection(collectionName);
+  }
+
+  public MongoCollection<Object> getMongoObjectCollection() {
+    return mongoObjectCollection;
+  }
+
+  public void setMongoObjectCollection(final MongoCollection<Object> mongoObjectCollection) {
+    this.mongoObjectCollection = mongoObjectCollection;
   }
 
   public FindIterable getResults() {

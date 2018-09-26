@@ -38,7 +38,6 @@ public class CsvFileInput implements FileInput {
     }
   }
 
-
   @Override
   public ArrayList fileToArrayListOfProfiles(final String pathToInput) {
     try {
@@ -52,11 +51,12 @@ public class CsvFileInput implements FileInput {
         final CustomerProfile customerProfile = new CustomerProfile(new Customer(rowAsMap.get("firstName"), rowAsMap.get("lastName")),
             new Address(rowAsMap.get("postcode"), rowAsMap.get("houseNumber"), rowAsMap.get("street"), rowAsMap.get("city")),
             new Car(rowAsMap.get("registration"), rowAsMap.get("make"), rowAsMap.get("model"), rowAsMap.get("engineSize")));
-        final Set<ConstraintViolation<CustomerProfile>> violations = classValidator.validateProfile(customerProfile);
+        final Set<ConstraintViolation<Object>> violations = classValidator.validateProfile(customerProfile);
         if (!violations.isEmpty() || !mapChecker(rowAsMap)) {
-          for (final ConstraintViolation<CustomerProfile> violation : violations) {
+          for (final ConstraintViolation<Object> violation : violations) {
             System.out.println("######ERROR#######\nViolation for: \n" + customerProfile.getCustomer().toString());
-            System.out.println("Violation: " + violation.getMessage());
+            System.out.println("Violation: " + violation.getMessage() + "\nPLEASE CHECK CSV FILE FOR ERRORS\n-------------\n");
+
           }
         } else {
           arrayList.add(customerProfile);

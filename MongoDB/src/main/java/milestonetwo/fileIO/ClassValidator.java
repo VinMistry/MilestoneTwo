@@ -7,16 +7,13 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import milestonetwo.models.CustomerProfile;
-
 public class ClassValidator implements MyValidation {
 
   @Override
-  public Set<ConstraintViolation<CustomerProfile>> validateProfile(final CustomerProfile customerProfile) {
+  public Set<ConstraintViolation<Object>> validateProfile(final Object customerProfile) {
     final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     final Validator validator = factory.getValidator();
-    final Set<ConstraintViolation<CustomerProfile>> violations = validator.validate(customerProfile);
+    final Set<ConstraintViolation<Object>> violations = validator.validate(customerProfile);
     return violations;
   }
-
 }

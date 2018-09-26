@@ -4,9 +4,7 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-import milestonetwo.models.CustomerProfile;
-
 public interface MyValidation {
 
-  Set<ConstraintViolation<CustomerProfile>> validateProfile(CustomerProfile customerProfile);
+  Set<ConstraintViolation<Object>> validateProfile(Object customerProfile);
 }
