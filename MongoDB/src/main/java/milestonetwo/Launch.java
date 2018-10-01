@@ -6,13 +6,19 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.util.ArrayList;
 
+import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.mongodb.Block;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
 
-import milestonetwo.database.MongoDBCon;
+import milestonetwo.database.MongoDBAddress;
+import milestonetwo.database.MongoDBProfile;
 import milestonetwo.fileIO.ClassValidator;
 import milestonetwo.fileIO.CsvFileInput;
 import milestonetwo.fileIO.FilePath;
@@ -79,24 +85,54 @@ public class Launch {
     return settings;
   }
 
+  public static MongoCollection<CustomerProfile> getMongoDB(final String dbName) {
+    final MongoClient mongoClient = MongoClients.create(getRegistrySettings());
+    return mongoClient.getDatabase(dbName).getCollection("people", CustomerProfile.class);
+  }
+
+  static MongoCollection<Address> getMongoAddr(final String dbName) {
+    final MongoClient mongoClient = MongoClients.create(getRegistrySettings());
+    return mongoClient.getDatabase(dbName).getCollection("addresses", Address.class);
+  }
+
+
   public static String getCsvFilePath() {
     return FilePath.getInputFilePath("mock_data", "csv");
   }
 
   public static void main(final String[] args) {
+    final Block<Document> printBlock = new Block<Document>() {
+      @Override
+      public void apply(final Document document) {
+        System.out.println(document.toJson());
+      }
+    };
 //    final JsonFileOutput jsonFileOutput = new JsonFileOutput(new FilePath(), new ObjectMapper());
     final ClassValidator classValidator = new ClassValidator();
     final CsvFileInput csvFileInput = new CsvFileInput(new ArrayList<CustomerProfile>(), new CsvMapper(), classValidator);
 //    jsonFileOutput.arrayListToFiles(csvFileInput.jsonStringToObject(FilePath.getInputFilePath("mock_data", "csv")));
-    csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")).forEach(object -> System.out.println(object));
-    final MongoDBCon mongoDBCon = new MongoDBCon(getRegistrySettings(), "customers");
-    //mongoDBCon.filterRead("car.make", "BMW");
+    // csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")).forEach(object -> System.out.println(object));
+//    final MongoDBConGeneric mongoDBCon = new MongoDBConGeneric(MongoClients.create(Launch.getRegistrySettings()), "customers");
+//    mongoDBCon.filterRead("people", "car.make", "BMW", 0);
+    //
     //mongoDBCon.read("people", 0);
     //mongoDBCon.printResults();
     // mongoDBCon.insertArrayOfData(csvFileInput.jsonStringToObject(FilePath.getInputFilePath("mock_data", "csv")), "people");
     //mongoDBCon.filterRead("people", "address.postcode", "SK11", 0);
     //mongoDBCon.setMongoCollection("people");
     // mongoDBCon.storeAddressesSeparate(mongoDBCon.getMongoCollection());
+    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
+    mongoDBProfile.deleteAll();
+    mongoDBProfile.insertArrayOfData(csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")));
+    mongoDBProfile.read();
+    final MongoDBAddress mongoDBAddress = new MongoDBAddress(getMongoAddr("test"));
+    mongoDBAddress.deleteAll();
+    /*final ArrayList<Address> arrayList = new ArrayList<>();
+    mongoDBProfile.getResults().forEach((Block<? super CustomerProfile>) customerProfile -> arrayList.add(customerProfile.getAddress()));
+    mongoDBAddress.setResults(mongoDBProfile.retrieveProjection("address"));
+    System.out.println("************");
+    mongoDBAddress.insertArrayOfData(arrayList, "addresses");*/
+    mongoDBProfile.limitedRead(10);
   }
 
 }

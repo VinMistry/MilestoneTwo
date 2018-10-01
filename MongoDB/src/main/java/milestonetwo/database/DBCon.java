@@ -2,21 +2,21 @@ package milestonetwo.database;
 
 import java.util.ArrayList;
 
-public interface DBCon {
+public interface DBCon<T> {
 
-  void read(String tableName, int skipNumber);
+  void read();
 
-  void filterRead(final String tableName, String filterField, String filterValue, final int skipNumber);
+  void filterRead(String filterField, String filterValue);
 
-  void insert(Object object, String tableName);
+  void insert(T t);
 
-  void insertArrayOfData(ArrayList arrayList, String tableName);
+  void insertArrayOfData(ArrayList arrayList);
 
   void update();
 
-  void deleteWhere(String tableName, String where, String equals);
+  void deleteWhere(String where, String equals);
 
-  void deleteAll(String tableName);
+  void deleteAll();
 
 }
 

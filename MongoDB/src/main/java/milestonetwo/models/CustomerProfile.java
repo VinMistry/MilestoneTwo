@@ -25,7 +25,6 @@ public class CustomerProfile {
     customer = new Customer();
     address = new Address();
     car = new Car();
-
   }
 
   public CustomerProfile(final Customer customer, final Address address, final Car car) {
@@ -60,7 +59,7 @@ public class CustomerProfile {
 
   @Override
   public String toString() {
-    return "Customer Profile: \n" + getCustomer().toString() + "\n" + getAddress().toString() + "\n" + getCar().toString();
+    return "Customer Profile: \n" + customer.toString() + "\n" + address.toString() + "\n" + car.toString();
   }
 
 }

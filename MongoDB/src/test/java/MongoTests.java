@@ -1,36 +1,16 @@
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
-import org.bson.Document;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-
-import milestonetwo.Launch;
-import milestonetwo.database.MongoDBCon;
-import milestonetwo.fileIO.ClassValidator;
-import milestonetwo.fileIO.CsvFileInput;
-import milestonetwo.fileIO.JsonFileInput;
-import milestonetwo.models.Address;
-import milestonetwo.models.Car;
-import milestonetwo.models.Customer;
-import milestonetwo.models.CustomerProfile;
-
+/*
 public class MongoTests {
 
   CsvFileInput fileInput;
   ArrayList<CustomerProfile> arrayList;
-  MongoDBCon mongoDBCon;
+  MongoDBConGeneric mongoDBCon;
   CustomerProfile testCustomerProfile = new CustomerProfile(new Customer("Thelma", "Baudone"), new Address("LE14", "857", "Forster", "Twyford"),
       new Car("49288-0944", "Honda", "Insight", "1"));
 
   @BeforeEach
   void setUp() {
-    mongoDBCon = new MongoDBCon(Launch.getRegistrySettings(), "test");
+//    mongoDBCon = new MongoDBConGeneric(MongoClients.create(Launch.getRegistrySettings()), "test");
+    //mongoDBCon.setMongoObjectCollection(mongoDBCon.getDatabase().getCollection("test", CustomerProfile.class));
     arrayList = new ArrayList<>();
     fileInput = new CsvFileInput(arrayList, new CsvMapper(), new ClassValidator());
   }
@@ -58,7 +38,9 @@ public class MongoTests {
 
   @Test
   void readCollectionTest() {
-
+    mongoDBCon.insertArrayOfData(fileInput.fileToArrayListOfProfiles(Paths.get("").toAbsolutePath().toString() + "/src/test/resources/mock_data.csv"), "test");
+    mongoDBCon.read("test", 0);
+    final JsonFileInput jsonFileInput = new JsonFileInput(new ArrayList<CustomerProfile>(), new ObjectMapper());
   }
 
   @Test
@@ -82,3 +64,4 @@ public class MongoTests {
   }
 
 }
+*/

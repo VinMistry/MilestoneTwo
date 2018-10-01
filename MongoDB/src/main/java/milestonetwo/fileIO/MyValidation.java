@@ -4,7 +4,7 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
-public interface MyValidation {
+public interface MyValidation<T> {
 
-  Set<ConstraintViolation<Object>> validateProfile(Object customerProfile);
+  Set<ConstraintViolation<T>> validateProfile(T t);
 }
