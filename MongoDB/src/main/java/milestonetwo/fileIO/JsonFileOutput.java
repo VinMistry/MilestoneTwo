@@ -9,11 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonFileOutput implements FileOutput {
 
-  private FilePath outputFilePath;
   private ObjectMapper objectMapper;
 
-  public JsonFileOutput(final FilePath outputFilePath, final ObjectMapper objectMapper) {
-    this.outputFilePath = outputFilePath;
+  public JsonFileOutput(final ObjectMapper objectMapper) {
     this.objectMapper = objectMapper;
   }
 
@@ -21,7 +19,7 @@ public class JsonFileOutput implements FileOutput {
   public void objectToFile(final String filename, final Object objectToWrite) {
     objectMapper.setVisibility(PropertyAccessor.GETTER, Visibility.PUBLIC_ONLY);
     objectMapper.setVisibility(PropertyAccessor.SETTER, Visibility.NONE);
-    final File fileToCreate = new File(outputFilePath.getOutputFilePath(filename, "json"));
+    final File fileToCreate = new File(FilePath.getOutputFilePath(filename, "json"));
     try {
       objectMapper.writeValue(fileToCreate, objectToWrite);
     } catch (final Exception e) {

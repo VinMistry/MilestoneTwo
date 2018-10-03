@@ -2,6 +2,9 @@ package milestonetwo.database;
 
 import java.util.ArrayList;
 
+import org.bson.Document;
+
+import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
@@ -19,13 +22,25 @@ public class MongoDBAddress implements DBCon<Address> {
   @Setter
   FindIterable results;
 
+  final Block<Document> printBlock = new Block<Document>() {
+    @Override
+    public void apply(final Document document) {
+      System.out.println(document.toJson());
+    }
+  };
+
   public MongoDBAddress(final MongoCollection<Address> mongoCollection) {
     this.mongoCollection = mongoCollection;
   }
 
+  public void printResults() {
+    System.out.println("#####--RESULTS--####");
+    results.forEach((Block) address -> System.out.println(address));
+  }
+
   @Override
   public void read() {
-
+    results = mongoCollection.find();
   }
 
   @Override

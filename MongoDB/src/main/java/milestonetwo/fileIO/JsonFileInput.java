@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JsonFileInput {
+public class JsonFileInput implements FileInput<Object> {
 
   private ArrayList arrayList;
   private ObjectMapper objectMapper;
@@ -16,7 +16,8 @@ public class JsonFileInput {
     this.objectMapper = objectMapper;
   }
 
-  public Object jsonStringToObject(final Object object, final String json) {
+  @Override
+  public Object stringToObject(final Object object, final String json) {
     final Class clazz = object.getClass();
     try {
       objectToReturn = objectMapper.readValue(json, clazz);
@@ -25,4 +26,10 @@ public class JsonFileInput {
     }
     return objectToReturn;
   }
+
+  @Override
+  public ArrayList fileToArrayListOfProfiles(final String filename) {
+    return arrayList;
+  }
+
 }

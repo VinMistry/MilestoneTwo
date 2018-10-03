@@ -33,9 +33,8 @@ public class CsvFileInput implements FileInput {
     if (rowAsMap.containsValue("")) {
       System.out.println("######ERROR#####\n On line containing:\n" + rowAsMap.toString() + "\nPLEASE CHECK CSV FILE FOR ERRORS\n-------------\n");
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 
   @Override
@@ -66,6 +65,11 @@ public class CsvFileInput implements FileInput {
       e.printStackTrace();
     }
     return arrayList;
+  }
+
+  @Override
+  public Object stringToObject(final Object o, final String string) {
+    return null;
   }
 
 }

@@ -100,6 +100,58 @@ public class Launch {
     return FilePath.getInputFilePath("mock_data", "csv");
   }
 
+  public void writeCsvToDB() {
+    final ClassValidator classValidator = new ClassValidator();
+    final CsvFileInput csvFileInput = new CsvFileInput(new ArrayList<CustomerProfile>(), new CsvMapper(), classValidator);
+    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
+    mongoDBProfile.deleteAll();
+    mongoDBProfile.insertArrayOfData(csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")));
+  }
+
+  public void readAll() {
+    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
+    mongoDBProfile.read();
+    mongoDBProfile.printResults();
+  }
+
+
+  public void readLast10() {
+    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
+    mongoDBProfile.limitedRead(10);
+    mongoDBProfile.printResults();
+  }
+
+  public void readBMWs() {
+    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
+    mongoDBProfile.filterRead("car.make", "BMW");
+    mongoDBProfile.printResults();
+  }
+
+  public void readPostcodeSK11() {
+    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
+    mongoDBProfile.filterRead("address.postcode", "SK11");
+    mongoDBProfile.printResults();
+  }
+
+  public void storeAddressSeparate() {
+    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
+    mongoDBProfile.retrieveProjection("address");
+    final ArrayList<Address> arrayList = new ArrayList<>();
+    final MongoDBAddress mongoDBAddress = new MongoDBAddress(getMongoAddr("test"));
+    mongoDBProfile.getResults().forEach((Block<? super CustomerProfile>) customerProfile -> arrayList.add(customerProfile.getAddress()));
+    System.out.println("************");
+    mongoDBAddress.insertArrayOfData(arrayList);
+    mongoDBAddress.read();
+    mongoDBAddress.printResults();
+  }
+
+  public void deleteCollections() {
+    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
+    final MongoDBAddress mongoDBAddress = new MongoDBAddress(getMongoAddr("test"));
+    mongoDBAddress.deleteAll();
+    mongoDBProfile.deleteAll();
+  }
+
   public static void main(final String[] args) {
     final Block<Document> printBlock = new Block<Document>() {
       @Override
@@ -107,32 +159,13 @@ public class Launch {
         System.out.println(document.toJson());
       }
     };
-//    final JsonFileOutput jsonFileOutput = new JsonFileOutput(new FilePath(), new ObjectMapper());
-    final ClassValidator classValidator = new ClassValidator();
-    final CsvFileInput csvFileInput = new CsvFileInput(new ArrayList<CustomerProfile>(), new CsvMapper(), classValidator);
-//    jsonFileOutput.arrayListToFiles(csvFileInput.jsonStringToObject(FilePath.getInputFilePath("mock_data", "csv")));
-    // csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")).forEach(object -> System.out.println(object));
-//    final MongoDBConGeneric mongoDBCon = new MongoDBConGeneric(MongoClients.create(Launch.getRegistrySettings()), "customers");
-//    mongoDBCon.filterRead("people", "car.make", "BMW", 0);
-    //
-    //mongoDBCon.read("people", 0);
-    //mongoDBCon.printResults();
-    // mongoDBCon.insertArrayOfData(csvFileInput.jsonStringToObject(FilePath.getInputFilePath("mock_data", "csv")), "people");
-    //mongoDBCon.filterRead("people", "address.postcode", "SK11", 0);
-    //mongoDBCon.setMongoCollection("people");
-    // mongoDBCon.storeAddressesSeparate(mongoDBCon.getMongoCollection());
-    final MongoDBProfile mongoDBProfile = new MongoDBProfile(Launch.getMongoDB("test"));
-    mongoDBProfile.deleteAll();
-    mongoDBProfile.insertArrayOfData(csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")));
-    mongoDBProfile.read();
-    final MongoDBAddress mongoDBAddress = new MongoDBAddress(getMongoAddr("test"));
-    mongoDBAddress.deleteAll();
-    /*final ArrayList<Address> arrayList = new ArrayList<>();
-    mongoDBProfile.getResults().forEach((Block<? super CustomerProfile>) customerProfile -> arrayList.add(customerProfile.getAddress()));
-    mongoDBAddress.setResults(mongoDBProfile.retrieveProjection("address"));
-    System.out.println("************");
-    mongoDBAddress.insertArrayOfData(arrayList, "addresses");*/
-    mongoDBProfile.limitedRead(10);
+    final Launch l = new Launch();
+    l.writeCsvToDB();
+    //l.readAll();
+    //l.readLast10();
+    // l.readBMWs();
+    //l.storeAddressSeparate();
+    //l.deleteCollections();
   }
 
 }

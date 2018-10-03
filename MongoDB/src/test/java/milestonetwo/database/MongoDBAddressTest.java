@@ -38,6 +38,12 @@ class MongoDBAddressTest {
   }
 
   @Test
+  void read() {
+    mongoDBAddress.read();
+    verify(mongoCollection).find();
+  }
+  
+  @Test
   void insertArrayOfData() {
     mongoDBAddress.insertArrayOfData(arrayList);
     verify(mongoCollection).insertMany(arrayList);

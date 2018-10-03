@@ -43,8 +43,8 @@ public class MongoDBProfile implements DBCon<CustomerProfile> {
     results.forEach((Block) profile -> System.out.println(profile));
   }
 
-  public FindIterable<CustomerProfile> retrieveProjection(final String fieldName) {
-    return mongoCollection.find().projection(fields(include(fieldName)));
+  public void retrieveProjection(final String fieldName) {
+    results = mongoCollection.find().projection(fields(include(fieldName)));
   }
 
   @Override
