@@ -1,6 +1,39 @@
 package milestonetwo.database;
 
-public class MongoDBCon {
+import static com.mongodb.MongoClient.getDefaultCodecRegistry;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
+
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class MongoDBCon implements DBCon<MongoCollection> {
+
+  private MongoDatabase database;
+
+  private MongoClientSettings getRegistrySettings() {
+    final CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(),
+        fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+    final MongoClientSettings settings = MongoClientSettings.builder()
+        .codecRegistry(pojoCodecRegistry)
+        .build();
+    return settings;
+  }
+
+  public MongoDBCon(final String dbName) {
+    final MongoClient mongoClient = MongoClients.create(getRegistrySettings());
+    database = mongoClient.getDatabase(dbName);
+  }
+
+  @Override
+  public MongoCollection connectToCollection(final String collectionName, final Class clazz) {
+    return database.getCollection(collectionName, clazz);
+  }
 
 }

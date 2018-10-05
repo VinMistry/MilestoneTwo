@@ -12,15 +12,14 @@ import lombok.Getter;
 import lombok.Setter;
 import milestonetwo.models.Address;
 
-public class MongoDBAddress implements DBCon<Address> {
+public class MongoDBAddress implements DBFunctions<Address> {
 
 
   @Getter
   @Setter
-  MongoCollection<Address> mongoCollection;
-  @Getter
-  @Setter
-  FindIterable results;
+  private MongoCollection<Address> mongoCollection;
+
+  private FindIterable results;
 
   final Block<Document> printBlock = new Block<Document>() {
     @Override
@@ -33,19 +32,24 @@ public class MongoDBAddress implements DBCon<Address> {
     this.mongoCollection = mongoCollection;
   }
 
-  public void printResults() {
-    System.out.println("#####--RESULTS--####");
-    results.forEach((Block) address -> System.out.println(address));
-  }
-
   @Override
   public void read() {
     results = mongoCollection.find();
   }
 
   @Override
+  public void limitedRead(final int numberOfResultsToReturn) {
+
+  }
+
+  @Override
   public void filterRead(final String filterField, final String filterValue) {
 
+  }
+
+  @Override
+  public FindIterable<Address> returnResults() {
+    return results;
   }
 
   @Override

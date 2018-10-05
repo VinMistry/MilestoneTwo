@@ -2,15 +2,10 @@ package milestonetwo.database;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
-import static com.mongodb.client.model.Projections.fields;
-import static com.mongodb.client.model.Projections.include;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import org.bson.Document;
-
-import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
@@ -18,33 +13,16 @@ import lombok.Getter;
 import lombok.Setter;
 import milestonetwo.models.CustomerProfile;
 
-public class MongoDBProfile implements DBCon<CustomerProfile> {
+public class MongoDBProfile implements DBFunctions<CustomerProfile> {
 
   @Getter
   @Setter
-  MongoCollection<CustomerProfile> mongoCollection;
-  @Getter
-  @Setter
-  FindIterable<CustomerProfile> results;
+  private MongoCollection<CustomerProfile> mongoCollection;
 
-  final Block<Document> printBlock = new Block<Document>() {
-    @Override
-    public void apply(final Document document) {
-      System.out.println(document.toJson());
-    }
-  };
+  private FindIterable<CustomerProfile> results;
 
   public MongoDBProfile(final MongoCollection mongoCollection) {
     this.mongoCollection = mongoCollection;
-  }
-
-  public void printResults() {
-    System.out.println("#####--RESULTS--####");
-    results.forEach((Block) profile -> System.out.println(profile));
-  }
-
-  public void retrieveProjection(final String fieldName) {
-    results = mongoCollection.find().projection(fields(include(fieldName)));
   }
 
   @Override
@@ -52,9 +30,16 @@ public class MongoDBProfile implements DBCon<CustomerProfile> {
     results = mongoCollection.find();
   }
 
-  public void limitedRead(final int skipNumber) {
+  @Override
+  public FindIterable<CustomerProfile> returnResults() {
+    return results;
+  }
+
+
+  @Override
+  public void limitedRead(final int numberOfResultsToReturn) {
     final int number = (int) mongoCollection.countDocuments();
-    results = mongoCollection.find().skip(number - skipNumber);
+    results = mongoCollection.find().skip(number - numberOfResultsToReturn);
   }
 
   @Override
