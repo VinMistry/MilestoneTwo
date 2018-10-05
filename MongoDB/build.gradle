@@ -23,7 +23,7 @@ dependencies {
     compile group: 'org.glassfish.web', name: 'javax.el', version: '2.2.6'
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '4.2.0.Final'
-    compile group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: '4.2.0.Final'
+    compile group: 'org.hibernate', name: 'hibernate-validator-annotation-processor', version: '4.2.0.Final'
     compile "org.projectlombok:lombok:1.18.0"
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.9.6'
@@ -36,4 +36,7 @@ dependencies {
     testRuntimeOnly(
             'org.junit.jupiter:junit-jupiter-engine:5.1.0'
     )
+
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
+
 }

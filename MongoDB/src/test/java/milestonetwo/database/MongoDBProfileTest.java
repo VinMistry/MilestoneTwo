@@ -59,15 +59,6 @@ class MongoDBProfileTest {
   }
 
   @Test
-  void retrieveProjection() {
-    when(mongoCollection.find()).thenReturn(customerProfiles);
-    mongoDBProfile.retrieveProjection("address");
-    verify(customerProfiles).projection(bsonCaptor.capture());
-    final Bson value = bsonCaptor.getValue();
-    assertEquals(value.toString(), "Projections{projections=[{ \"address\" : 1 }]}");
-  }
-
-  @Test
   void read() {
     mongoDBProfile.read();
     verify(mongoCollection).find();

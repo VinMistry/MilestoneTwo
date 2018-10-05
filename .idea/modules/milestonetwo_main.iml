@@ -9,29 +9,21 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="Gradle: org.hibernate.validator:hibernate-validator-annotation-processor:4.2.0.Final">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../MongoDB/Could not find org.hibernate.validator:hibernate-validator-annotation-processor:4.2.0.Final.&#10;Searched in the following locations:&#10;  - https:/repo.maven.apache.org/maven2/org/hibernate/validator/hibernate-validator-annotation-processor/4.2.0.Final/hibernate-validator-annotation-processor-4.2.0.Final.pom&#10;  - https:/repo.maven.apache.org/maven2/org/hibernate/validator/hibernate-validator-annotation-processor/4.2.0.Final/hibernate-validator-annotation-processor-4.2.0.Final.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="Gradle: org.mongodb:mongo-java-driver:3.8.2" level="project" />
-    <orderEntry type="library" name="Gradle: javax.validation:validation-api:2.0.0.Final" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.6" level="project" />
-    <orderEntry type="library" name="Gradle: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.18.0" level="project" />
-    <orderEntry type="library" name="Gradle: javax.el:javax.el-api:3.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.6" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.6" level="project" />
-    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
-    <orderEntry type="library" name="Gradle: javax.xml.bind:jaxb-api:2.2.4" level="project" />
-    <orderEntry type="library" name="Gradle: javax.xml.stream:stax-api:1.0-2" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.25" level="project" />
-    <orderEntry type="library" name="Gradle: org.hibernate:hibernate-validator:4.2.0.Final" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Gradle: javax.xml.bind:jaxb-api:2.2.4" level="project" />
     <orderEntry type="library" name="Gradle: org.glassfish.web:javax.el:2.2.6" level="project" />
+    <orderEntry type="library" name="Gradle: javax.el:javax.el-api:3.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.hibernate:hibernate-validator-annotation-processor:4.2.0.Final" level="project" />
+    <orderEntry type="library" name="Gradle: org.hibernate:hibernate-validator:4.2.0.Final" level="project" />
+    <orderEntry type="library" name="Gradle: javax.validation:validation-api:2.0.0.Final" level="project" />
+    <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.18.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.mongodb:mongo-java-driver:3.8.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Gradle: javax.xml.stream:stax-api:1.0-2" level="project" />
+    <orderEntry type="library" name="Gradle: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.9.6" level="project" />
   </component>
 </module>

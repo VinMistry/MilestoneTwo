@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 
+import milestonetwo.database.ClientFactory;
+import milestonetwo.database.ClientType;
 import milestonetwo.database.DBCon;
 import milestonetwo.database.DBFunctions;
 import milestonetwo.database.MongoDBAddress;
@@ -44,22 +46,16 @@ public class Launch {
     return FilePath.getInputFilePath("mock_data", "csv");
   }
 
-  public void readAllProfiles() {
-    profileDatabaseFunctions.read();
-    printer.printResults(profileDatabaseFunctions.returnResults());
-  }
-
   public void writeCsvToDB() {
     final CsvFileInput csvFileInput = new CsvFileInput(new ArrayList<CustomerProfile>(), new CsvMapper(), new ClassValidator());
     profileDatabaseFunctions.deleteAll();
     profileDatabaseFunctions.insertArrayOfData(csvFileInput.fileToArrayListOfProfiles(FilePath.getInputFilePath("mock_data", "csv")));
   }
-//
-//  public void readAll() {
-//    mongoDBProfile.read();
-//    mongoDBProfile.printResults();
-//  }
-//
+
+  public void readAllProfiles() {
+    profileDatabaseFunctions.read();
+    printer.printResults(profileDatabaseFunctions.returnResults());
+  }
 
   public void readLast10Profiles() {
     profileDatabaseFunctions.limitedRead(10);
@@ -93,18 +89,16 @@ public class Launch {
 
 
   public static void main(final String[] args) {
-    final MongoDBCon mongoDBCon = new MongoDBCon("test");
+    final MongoDBCon mongoDBCon = new MongoDBCon(new ClientFactory().clientFactory(ClientType.POJO_SETTINGS.toString()), "test");
     final MongoDBProfile mongoDBProfile = new MongoDBProfile(mongoDBCon.connectToCollection("people", CustomerProfile.class));
     final MongoDBAddress mongoDBAddress = new MongoDBAddress(mongoDBCon.connectToCollection("addresses", Address.class));
     final Launch l = new Launch(new PrintIterableLists(), mongoDBCon, mongoDBProfile, mongoDBAddress);
-    //l.readAllProfiles();
-    //p.printResults(mongoDBProfile.returnResults());
     //l.writeCsvToDB();
-    //l.readAll();
+    l.readAllProfiles();
     // l.readLast10Profiles();
     //l.readBMWs();
     // l.readPostcodeSK11();
-    l.storeAddressSeparate();
+    //l.storeAddressSeparate();
     //l.deleteCollections();
   }
 
